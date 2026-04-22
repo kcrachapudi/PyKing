@@ -157,6 +157,14 @@ a, b, c = 1, 2, 3
 a, b = b, a
 print(a, b)    # 2 1
 
+#Python swap can work with any data type and mixing types
+# Python will not raise a runtime error when you swap variables of different types.
+# Even in Object-Oriented Python, the same rules apply: 
+# Python remains dynamic, even inside classes.
+
+#The tools like mypy are designed to catch type errors,
+#  but they are not perfect and can be bypassed.
+
 # Assign same value to many variables
 x = y = z = 0
 
@@ -186,7 +194,6 @@ age = 20
 has_id = True
 can_enter = age >= 18 and has_id
 print(can_enter)    # True
-
 
 # ------------------------------------------------------------
 # 10. COMMON BEGINNER MISTAKES TO AVOID

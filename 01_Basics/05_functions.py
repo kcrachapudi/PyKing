@@ -316,6 +316,26 @@ def fib(n: int) -> int:
 
 print([fib(i) for i in range(8)])    # [0, 1, 1, 2, 3, 5, 8, 13]
 
+def fib_loop(n: int) -> int:
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+print(fib_loop(10))  # Output: 55
+
+"""Why this is usually preferred:
+Memory Efficient: It only ever tracks two numbers (a and b) in memory. It doesn't create a massive "tree" of functions or a list of tuples.
+No "Recursion Depth" Error: If you try to run a recursive fib(2000), Python will crash because the stack is too deep. This loop can handle fib(10000) without breaking a sweat.
+Readability: Most developers can look at a, b = b, a + b and immediately understand that the values are "shifting" forward.
+Comparison of the 3 Methods
+Method	Style	Best For...
+Recursion	Mathematical	Teaching the concept of Fibonacci.
+Reduce	Functional	When you want to avoid side effects or "flex" your FP skills.
+For Loop	Imperative	Production code. It's fast, safe, and readable.
+Now that you've seen the "big three" ways to handle logic (Recursion, Functional/Reduce, and Loops), do you want to dive deeper into tuple unpacking (the a, b = b, a + b part), or should we look at something else?
+"""
+
 # ⚠️  Recursion without a base case = infinite loop → crash.
 # ⚠️  Python's default recursion limit is 1000 calls.
 
@@ -352,6 +372,8 @@ def add_item_good(item, lst=None):
 
 print(add_item_good(1))    # [1]
 print(add_item_good(2))    # [2]  ✅
+#The Golden Rule: Never use a mutable object (list, dict, set) as a 
+# default argument in a function. Always use None.
 
 # Pattern 3: Unpacking arguments with * and **
 def add(a, b, c):
@@ -362,6 +384,39 @@ print(add(*nums))       # unpacks list into positional args → 6
 
 info = {"a": 1, "b": 2, "c": 3}
 print(add(**info))      # unpacks dict into keyword args → 6
+
+from functools import reduce
+#You have a list of tuples representing students and their grades:
+#Write a sorted() function using a lambda as the key that sorts the students primarily by grade 
+# (highest to lowest), and secondarily by name (alphabetically) if the grades are tied.
+#students = [("Alice", 88), ("Bob", 95), ("Charlie", 88), ("David", 92)]
+#sorted_students = sorted(students, lambda s: )
+
+
+#Write a lambda function called check_val that takes a number x.
+#If x is greater than 10, return "High".
+#If x is between 5 and 10 (inclusive), return "Medium". Otherwise, return "Low".
+#Constraint: You must do this in a single lambda line using nested ternary operators.
+check_val = lambda x: "High" if x>10 else "Medium" if 5<=x<=10 else "Low"
+print(check_val(4))
+
+#Question 4: Dictionary Mapping
+#Given a list of dictionaries:
+data = [{"id": 1, "val": 10}, {"id": 2, "val": 20}, {"id": 3, "val": 30}]
+#Use the map() function and a lambda to return a list of just the "val" numbers, 
+# but multiply each value by 2 only if the "id" is an odd number.
+#new_data = list(map(lambda x: list(x.items())[1]*2 if list(x.items())[0]%2==0 else list(x.items())[1], data))
+#print(new_data)
+#Question 5: The "Self-Executing" Challenge
+#Write a single line of code using a lambda that calculates the factorial of 5 
+# without using the math module or defining a standard def function.
+#Hint: You’ll need to pass the lambda into itself or use a functional tool like reduce.
+#Take your time—I'm ready when you are! Which one do you want to tackle first?
+
+print(list(range(5, 0, -1)))
+factorial = reduce(lambda x, y: x*y, list(range(5, 1, -1)))
+print(factorial)
+
 
 
 # ============================================================

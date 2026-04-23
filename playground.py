@@ -1,31 +1,99 @@
-from functools import reduce
-#You have a list of tuples representing students and their grades:
-#Write a sorted() function using a lambda as the key that sorts the students primarily by grade 
-# (highest to lowest), and secondarily by name (alphabetically) if the grades are tied.
-#students = [("Alice", 88), ("Bob", 95), ("Charlie", 88), ("David", 92)]
-#sorted_students = sorted(students, lambda s: )
+
+from collections import namedtuple
+from sqlite3 import Row
 
 
-#Write a lambda function called check_val that takes a number x.
-#If x is greater than 10, return "High".
-#If x is between 5 and 10 (inclusive), return "Medium". Otherwise, return "Low".
-#Constraint: You must do this in a single lambda line using nested ternary operators.
-check_val = lambda x: "High" if x>10 else "Medium" if 5<=x<=10 else "Low"
-print(check_val(4))
+def exec1():
+    nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-#Question 4: Dictionary Mapping
-#Given a list of dictionaries:
-data = [{"id": 1, "val": 10}, {"id": 2, "val": 20}, {"id": 3, "val": 30}]
-#Use the map() function and a lambda to return a list of just the "val" numbers, 
-# but multiply each value by 2 only if the "id" is an odd number.
-#new_data = list(map(lambda x: list(x.items())[1]*2 if list(x.items())[0]%2==0 else list(x.items())[1], data))
-#print(new_data)
-#Question 5: The "Self-Executing" Challenge
-#Write a single line of code using a lambda that calculates the factorial of 5 
-# without using the math module or defining a standard def function.
-#Hint: You’ll need to pass the lambda into itself or use a functional tool like reduce.
-#Take your time—I'm ready when you are! Which one do you want to tackle first?
+    print(nums[2:5])      # [2, 3, 4]        start=2, stop=5
+    print(nums[:4])       # [0, 1, 2, 3]     from beginning to 4
+    print(nums[6:])       # [6, 7, 8, 9]     from 6 to end
+    print(nums[:])        # full copy        entire list
+    print(nums[::2])      # [0, 2, 4, 6, 8]  every other item
+    print(nums[1::2])     # [1, 3, 5, 7, 9]  odd indices
+    print(nums[::-1])     # [9,8,7,6,5,4,3,2,1,0]  reversed
+    print(nums[7:2:-1])   # [7, 6, 5, 4, 3]  reverse slice
 
-print(list(range(5, 0, -1)))
-factorial = reduce(lambda x, y: x*y, list(range(5, 1, -1)))
-print(factorial)
+
+def exec2():
+    numz = [0, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+    print(numz[2:5])      
+    print(numz[:4])       
+    print(numz[6:])       
+    print(numz[:])        
+    print(numz[::2])      
+    print(numz[1::2])     
+    print(numz[::-1])     
+    print(numz[7:2:-1])   
+
+
+def exec3():
+    fruits = ["apple", "banana", "cherry", "banana", "date"]
+    fruits.remove("banana")
+    print(fruits)
+
+
+def exec4():
+    grid = {}
+    grid[(0, 0)] = "start"
+    grid[(3, 4)] = "checkpoint"
+    grid[(9, 9)] = "end"
+    print(grid[(3, 4)])    
+
+
+def exec5():
+    Row = namedtuple("Row", ["id", "name", "score"])
+    rows = [
+        Row(1, "Alice", 92),
+        Row(2, "Bob", 85),
+        Row(3, "Charlie", 95),
+    ]
+
+    for row in rows:
+        print(f"{row.name}: {row.score}")
+
+
+def exec6():
+    # Pattern 2: Iterate list of tuples
+    students = [("Alice", 92), ("Bob", 85), ("Charlie", 95)]
+    for name, score in students:        # tuple unpacking in for loop
+        print(f"{name}: {score}")
+
+    for name in students:        # tuple unpacking in for loop
+        print(f"{name}: {score}")
+
+
+def exec7():
+    fruits = {"apple", "banana"}
+
+    # add() — add one item
+    fruits.add("cherry")
+    print(fruits)    # {'apple', 'banana', 'cherry'}
+
+    # add() is safe — adding a duplicate does nothing
+    fruits.add("apple")
+    print(fruits)    # still {'apple', 'banana', 'cherry'}
+
+    # update() — add multiple items from any iterable
+    fruits.update(["date", "elderberry"])
+    fruits.update({"fig", "grape"})
+    fruits.update(("honeydew", "kiwi"))
+    print(fruits)
+
+    # remove() — raises KeyError if item not found
+    fruits.remove("banana")
+    # fruits.remove("mango")   ← KeyError!
+
+    # discard() — safe remove, no error if not found  ✅ prefer this
+    fruits.discard("mango")    # no error
+    fruits.discard("apple")    # removes it silently
+    print(fruits)
+
+    # pop() — removes and returns an ARBITRARY item (unpredictable)
+    item = fruits.pop()
+    print(f"Removed: {item}")
+
+
+if __name__ == "__main__":
+    exec7()

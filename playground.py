@@ -94,6 +94,37 @@ def exec7():
     item = fruits.pop()
     print(f"Removed: {item}")
 
+def itertools():
+    # --- itertools — powerful iteration tools ---
+    import itertools
+
+    # chain — combine multiple iterables
+    combined = list(itertools.chain([1,2,3], [4,5,6], [7,8]))
+    print(combined)    # [1,2,3,4,5,6,7,8]
+
+    # combinations — unique combinations
+    print(list(itertools.combinations([1,2,3,4], 2)))
+    # [(1,2),(1,3),(1,4),(2,3),(2,4),(3,4)]
+
+    # permutations
+    print(list(itertools.permutations([1,2,3], 2)))
+
+    # product — cartesian product
+    print(list(itertools.product([0,1], repeat=3)))
+    # all 3-bit binary numbers
+
+    # groupby — group consecutive items
+    data = [("A",1),("A",2),("B",3),("B",4),("C",5)]
+    for key, group in itertools.groupby(data, key=lambda x: x[0]):
+        print(key, list(group))
+
+    # islice — lazy slice of any iterator
+    first5 = list(itertools.islice(itertools.count(0), 5))
+    print(first5)    # [0, 1, 2, 3, 4]
+
 
 if __name__ == "__main__":
-    exec7()
+    print(f'name is {__name__}')
+    itertools()
+else:
+    print(f'This is from module playground. Running externally as {__name__} imported')

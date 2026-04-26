@@ -369,21 +369,26 @@ def safe_write(path, content):
 # ------------------------------------------------------------
 import os
 
-for fname in ["sample.txt", "data.txt", "output.txt", "log.txt",
-              "employees.csv", "employees2.csv", "users.json",
-              "notes.txt", "binary.bin", "data_backup.txt",
-              "data_backup2.txt", "app.log", "results.csv"]:
-    try:
-        os.remove(fname)
-    except FileNotFoundError:
-        pass
+# This is CLEANUP CODE — it runs at the END of the script to delete
+# all the temporary files and folders that were created DURING the script.
+# Think of it as tidying up after yourself so your folder stays clean.
 
+# Loop through a list of filenames that were created earlier in the script
+for fname in ["sample.txt", "data.txt", "output.txt", ...]:
+    try:
+        os.remove(fname)          # os.remove() deletes a single FILE
+    except FileNotFoundError:
+        pass                      # if the file doesn't exist (maybe it was
+                                  # never created), just skip it silently
+                                  # instead of crashing
+
+# Loop through folder names created during the script
 for dname in ["output", "new_folder"]:
     try:
-        shutil.rmtree(dname)
+        shutil.rmtree(dname)      # shutil.rmtree() deletes a FOLDER and
+                                  # everything inside it (rm = remove, tree = folder tree)
     except FileNotFoundError:
-        pass
-
+        pass                      # same idea — skip if folder doesn't exist
 
 # ============================================================
 # SUMMARY

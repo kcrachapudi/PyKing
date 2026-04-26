@@ -412,6 +412,39 @@ You return the wrapper so that the variable name (add) has a function to point t
 If you don't return it, the name add becomes empty (None), and your function effectively 
 disappears from the program.
 """
+"""
+Q2: The only reason everything works well is even when you pass parameters they all 
+get sent to the wrapped function as if nothing happened. 
+So a caller would not know what they are calling the wrapper or the wrapped 
+as they don't need to know (do they?) and wouldn't know if they wanted to (is this true?). 
+The function definition and name are the same so it should work is what a caller would assume. 
+Am I right in all these assumptions
+Ans: Spot on. You’ve just described the "Principle of Least Astonishment"—
+a good decorator should be a perfect imposter. Here’s a breakdown of your assumptions:
+1. "They don't need to know" (True)
+The caller shouldn't care. Whether they are calling a raw function or a decorated one, 
+the contract remains the same: "I give you two numbers, you give me a sum." 
+If the decorator adds logging or timing in the background, the caller’s life doesn't change. 
+This is the heart of Encapsulation.
+2. "They wouldn't know if they wanted to" (Mostly True)
+To a casual user, it is invisible. However, as we discussed with the __closure__ backpack, 
+a "detective" could find out. Without @wraps: It’s obvious. 
+If they check add.__name__, it returns "wrapper". The secret is out.
+With @wraps: It’s very hard to tell. Python copies the name, docstring, and signature. 
+It looks and smells like the original. The "Undo" Button: Most decorators "hide" the original 
+function in an attribute called __wrapped__. A suspicious caller could actually bypass your 
+decorator by calling add.__wrapped__(3, 5).
+3. "The function definition and name are the same" (Exactly!)
+Because *args and **kwargs act like a universal funnel, the signature 
+(what arguments the function accepts) stays compatible. This is why decorators are so 
+powerful for things like: Authentication: "I'll check if you're logged in, 
+then pass the arguments through." Caching: "I'll check if I already have the answer for these 
+arguments; if not, I'll pass them through." The "Leaky Abstraction" Exception
+There is one case where the caller might find out: Performance.
+If a decorator is poorly written and adds 2 seconds of delay to every call, 
+the caller will definitely notice something is "wrong," even if the results are correct.
+
+"""
 ##################################
 # ============================================================
 # SUMMARY
